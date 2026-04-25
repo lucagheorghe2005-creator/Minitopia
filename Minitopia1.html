@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minitopia · Mini world. Maxi fun.</title>
+    
+    <!-- Fonturi -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #FFA07A 0%, #A8E6CF 100%);
+            position: relative;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .darken-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: black; opacity: 0; pointer-events: none; z-index: 1;
+            transition: opacity 0.1s linear;
+        }
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+        .content { position: relative; z-index: 5; }
+        .header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 2rem 3rem; position: relative; z-index: 10;
+        }
+        .logo-wrapper {
+            position: relative; display: inline-block; cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+        }
+        .logo-wrapper:hover { transform: scale(1.08); }
+        .logo-text {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff6ec7, #a855f7, #f97316);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            padding: 0.6rem 1.8rem; border-radius: 100px; position: relative; z-index: 3;
+            letter-spacing: 1px;
+        }
+        .bubble {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: calc(100% + 40px); height: calc(100% + 40px); border-radius: 50%;
+            background: radial-gradient(circle at 28% 25%, 
+                rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.3) 20%,
+                rgba(173,216,255,0.15) 50%, rgba(255,255,255,0.6) 80%,
+                rgba(255,255,255,0.2) 100%);
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.9), inset -8px -8px 15px rgba(0,0,0,0.05),
+                        0 15px 30px rgba(0,0,0,0.1), 0 0 0 2px rgba(255,255,255,0.5);
+            backdrop-filter: blur(3px); z-index: 2; pointer-events: none;
+        }
+        .bubble::after {
+            content: ""; position: absolute; top: 8%; left: 10%; width: 20%; height: 28%;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 80%);
+            border-radius: 50%; opacity: 0.9; transform: rotate(-15deg); filter: blur(1px);
+        }
+        .bubble::before {
+            content: ""; position: absolute; bottom: 12%; right: 10%; width: 14%; height: 18%;
+            background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 80%);
+            border-radius: 50%; opacity: 0.6; filter: blur(1.5px);
+        }
+        .navbar { display: flex; gap: 2.5rem; margin-top: 0.75rem; }
+        .nav-link {
+            font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.2rem;
+            text-decoration: none; color: #1e1e1e; padding: 0.6rem 1.3rem; border-radius: 40px;
+            transition: all 0.25s ease; background: transparent; border: 2px solid transparent;
+        }
+        .nav-link:hover {
+            background-color: black !important; color: var(--bg-color, #FFA07A) !important;
+            border: 2px solid black;
+        }
+        .hero {
+            min-height: 80vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 2rem;
+        }
+        .hero-content { max-width: 800px; animation: floatIn 1s ease-out; }
+        .hero-title {
+            font-family: 'Patrick Hand', cursive; font-size: 4.5rem; color: #1e1e1e;
+            margin-bottom: 1rem; text-shadow: 4px 4px 0 rgba(255,255,255,0.5);
+        }
+        .hero-subtitle { font-size: 1.8rem; color: #2d3748; margin-bottom: 2rem; }
+        .hero-btn {
+            display: inline-block; background-color: #ff6ec7; color: white; font-weight: bold;
+            font-size: 1.3rem; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none;
+            box-shadow: 0 10px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.1s ease; border: 2px solid white;
+        }
+        .hero-btn:hover { transform: translateY(5px); box-shadow: 0 5px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.1); }
+        section { padding: 6rem 3rem; position: relative; z-index: 5; }
+        .section-title {
+            font-family: 'Patrick Hand', cursive; font-size: 3.5rem; color: #1e1e1e;
+            text-align: center; margin-bottom: 3rem; position: relative; display: inline-block;
+            left: 50%; transform: translateX(-50%); padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: ''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 4px;
+            background: linear-gradient(90deg, transparent, #ff6ec7, #a855f7, transparent);
+            border-radius: 4px;
+        }
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem; }
+        .card {
+            background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); border-radius: 30px;
+            padding: 2rem 1.5rem; width: 300px; text-align: center; box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.8); transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 25px 35px rgba(0,0,0,0.15); background: rgba(255,255,255,0.7); }
+        .card-icon { font-size: 4rem; color: #b5179e; margin-bottom: 1rem; }
+        .card h3 { font-size: 2rem; font-family: 'Patrick Hand', cursive; margin-bottom: 0.75rem; color: #1e1e1e; }
+        .card p { font-size: 1.1rem; color: #2d3748; margin-bottom: 1.5rem; }
+        .card-price { font-size: 2.2rem; font-weight: bold; color: #b5179e; }
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+        .gallery-item {
+            background: white; border-radius: 30px; padding: 2rem; width: 180px; text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 3px dashed #ffb6c1; transition: all 0.2s;
+        }
+        .gallery-item i { font-size: 4rem; color: #f97316; }
+        .contact-form {
+            max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px); padding: 2.5rem; border-radius: 40px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1); border: 2px solid white;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1e1e1e; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 1rem; border: 2px solid white; border-radius: 30px;
+            background: rgba(255,255,255,0.8); font-family: 'DM Sans', sans-serif; font-size: 1rem;
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+        }
+        .select-wrapper { position: relative; }
+        .select-wrapper i {
+            position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%);
+            color: #6b21a8; font-size: 1.2rem; pointer-events: none;
+        }
+        .form-group select { cursor: pointer; padding-right: 2.8rem; }
+        .form-group select option {
+            background: rgba(255, 255, 255, 0.95); color: #1e1e1e;
+            padding: 0.5rem; border-radius: 20px; backdrop-filter: blur(4px);
+        }
+        .error-message {
+            margin-top: 0.5rem; color: #d32f2f; font-size: 0.95rem;
+            display: flex; align-items: center; gap: 0.4rem; opacity: 0; transition: opacity 0.2s;
+            background: rgba(255,255,255,0.7); padding: 0.4rem 1rem; border-radius: 30px;
+            backdrop-filter: blur(4px); border: 1px solid #ffb6c1;
+        }
+        .error-message.show { opacity: 1; }
+        .error-message i { color: #d32f2f; font-size: 1.2rem; }
+        .total-box {
+            margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px); border-radius: 30px; text-align: center;
+            border: 2px solid white;
+        }
+        .total-label { font-size: 1.3rem; font-weight: 600; color: #1e1e1e; }
+        .total-amount { font-size: 2.5rem; font-weight: bold; color: #b5179e; font-family: 'Patrick Hand', cursive; }
+        .submit-btn {
+            background-color: #a855f7; color: white; border: none; padding: 1rem 2.5rem;
+            font-size: 1.3rem; font-weight: bold; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 8px 0 #6b21a8, 0 4px 10px rgba(0,0,0,0.1); transition: all 0.1s;
+            border: 2px solid white; width: 100%; margin-top: 1rem;
+        }
+        .submit-btn:hover { transform: translateY(4px); box-shadow: 0 4px 0 #6b21a8, 0 4px 10px rgba(0,0,0,0.1); }
+        .map-container {
+            border-radius: 30px; overflow: hidden; box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            border: 4px solid white; max-width: 900px; margin: 2rem auto 0;
+        }
+        .map-container iframe { width: 100%; height: 300px; display: block; }
+        .footer {
+            text-align: center; padding: 2rem; background: rgba(0,0,0,0.05);
+            backdrop-filter: blur(4px); color: #1e1e1e; border-top: 2px solid rgba(255,255,255,0.5);
+        }
+        .social-icons a { color: #1e1e1e; font-size: 1.8rem; margin: 0 0.8rem; transition: transform 0.2s; display: inline-block; }
+        .social-icons a:hover { transform: scale(1.2); color: #b5179e; }
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px;
+            background: #ff6ec7; color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 1.8rem;
+            box-shadow: 0 8px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid white; cursor: pointer; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.1s, box-shadow 0.1s;
+            z-index: 99; text-decoration: none;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(4px); box-shadow: 0 4px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.2); }
+        .back-to-top:active { transform: translateY(8px); box-shadow: 0 0 0 #b5179e, 0 5px 15px rgba(0,0,0,0.2); }
+        .intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffe4b5;
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
+            transform: translateY(-100%); transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            pointer-events: none;
+        }
+        .intro-overlay.active { transform: translateY(0%); pointer-events: auto; }
+        .intro-content {
+            text-align: center; opacity: 0; transform: scale(0.8);
+            transition: opacity 0.4s ease 0.4s, transform 0.5s ease 0.4s;
+        }
+        .intro-overlay.active .intro-content { opacity: 1; transform: scale(1); }
+        .intro-circle {
+            background-color: white; border-radius: 50%; width: 300px; height: 300px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); padding: 2rem;
+        }
+        .intro-minitopia {
+            font-family: 'Patrick Hand', cursive; font-size: 3.5rem;
+            background: linear-gradient(145deg, #ff4d6d, #b5179e, #7209b7);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            line-height: 1.1;
+        }
+        .intro-slogan { font-family: 'DM Sans', sans-serif; font-size: 1.5rem; color: #22d3ee; margin-top: 0.5rem; }
+        @keyframes floatIn { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 800px) {
+            .header { flex-direction: column; align-items: center; }
+            .navbar { gap: 1rem; }
+            .hero-title { font-size: 3rem; }
+            .back-to-top { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="darken-overlay" id="darkenOverlay"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-content">
+            <div class="intro-circle">
+                <div class="intro-minitopia">Minitopia</div>
+                <div class="intro-slogan">Mini world. Maxi fun.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <header class="header">
+            <div class="logo-wrapper" id="logoBubble">
+                <div class="bubble"></div>
+                <div class="logo-text">Minitopia</div>
+            </div>
+            <nav class="navbar">
+                <a href="#despre" class="nav-link">Despre noi</a>
+                <a href="#pachete" class="nav-link">Pachete & Tarife</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#rezervari" class="nav-link">Rezervări</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">🌈 Bine ai venit în Minitopia!</h1>
+                <p class="hero-subtitle">Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+                <a href="#rezervari" class="hero-btn">🎈 Hai să ne jucăm!</a>
+            </div>
+        </section>
+
+        <section id="despre">
+            <h2 class="section-title">🧸 Despre noi</h2>
+            <div class="gallery">
+                <div class="gallery-item"><i class="fas fa-smile-beam"></i><span>Distracție garantată</span></div>
+                <div class="gallery-item"><i class="fas fa-child"></i><span>Siguranță maximă</span></div>
+                <div class="gallery-item"><i class="fas fa-birthday-cake"></i><span>Petreceri tematice</span></div>
+                <div class="gallery-item"><i class="fas fa-users"></i><span>Echipă dedicată</span></div>
+            </div>
+            <p style="text-align: center; max-width: 800px; margin: 2rem auto; font-size: 1.3rem; color: #1e1e1e;">
+                Minitopia este mai mult decât un loc de joacă – este o lume în miniatură creată special pentru piticii voștri.
+            </p>
+        </section>
+
+        <section id="pachete">
+            <h2 class="section-title">🎁 Pachete & Tarife</h2>
+            <div class="card-container">
+                <div class="card" data-package="explorator">
+                    <div class="card-icon"><i class="fas fa-compass"></i></div>
+                    <h3>Pachet Explorator</h3>
+                    <p>1 oră de joacă și descoperire.</p>
+                    <div class="card-price">50 lei</div>
+                </div>
+                <div class="card" data-package="aventura">
+                    <div class="card-icon"><i class="fas fa-hiking"></i></div>
+                    <h3>Pachet Aventură</h3>
+                    <p>3 ore de distracție non-stop.</p>
+                    <div class="card-price">120 lei</div>
+                </div>
+                <div class="card" data-package="party">
+                    <div class="card-icon"><i class="fas fa-birthday-cake"></i></div>
+                    <h3>Party Exclusiv</h3>
+                    <p>3 ore · max 20 copii · petrecere privată.</p>
+                    <div class="card-price">900 lei</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rezervari">
+            <h2 class="section-title">📅 Rezervări</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <form class="contact-form" id="reservationForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nume părinte</label>
+                        <input type="text" id="parentName" placeholder="ex: Popescu Maria" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" placeholder="maria@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Telefon</label>
+                        <input type="tel" id="phone" placeholder="07xx xxx xxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-gift"></i> Alege pachetul</label>
+                        <div class="select-wrapper">
+                            <select id="packageSelect" required>
+                                <option value="" disabled selected>-- Selectează un pachet --</option>
+                                <option value="explorator">Pachet Explorator (1h) - 50 lei/copil</option>
+                                <option value="aventura">Pachet Aventură (3h) - 120 lei/copil</option>
+                                <option value="party">Pachet Party Exclusiv (3h, max 20 copii) - 900 lei</option>
+                            </select>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-children"></i> Număr copii</label>
+                        <input type="number" id="kids" min="1" max="20" placeholder="max. 20 copii" required>
+                        <div class="error-message" id="kidsError">
+                            <i class="fas fa-heart-broken"></i>
+                            <span>Oops! Numărul de copii trebuie să fie între 1 și 20. 🧸💔</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Data dorită</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-comment"></i> Mesaj</label>
+                        <textarea id="message" rows="2" placeholder="Mențiuni speciale..."></textarea>
+                    </div>
+                    
+                    <div class="total-box">
+                        <span class="total-label">Total de plată: </span>
+                        <span class="total-amount" id="totalAmount">0 lei</span>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Trimite rezervarea 🚀</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title">📍 Contact</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem;">
+                <div style="background: rgba(255,255,255,0.5); backdrop-filter: blur(4px); padding: 2rem; border-radius: 30px; min-width: 250px;">
+                    <h3 style="font-family: 'Patrick Hand', cursive; font-size: 2rem;"><i class="fas fa-map-pin"></i> Adresă</h3>
+                    <p>Strada Zâmbetelor nr. 10, București</p>
+                    <h3 style="margin-top: 1.5rem;"><i class="fas fa-clock"></i> Program</h3>
+                    <p>L-V: 10-20 · S-D: 09-21</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.5); backdrop-filter: blur(4px); padding: 2rem; border-radius: 30px; min-width: 250px;">
+                    <h3 style="font-family: 'Patrick Hand', cursive; font-size: 2rem;"><i class="fas fa-phone-alt"></i> Telefon</h3>
+                    <p>0712 345 678</p>
+                    <h3 style="margin-top: 1.5rem;"><i class="fas fa-envelope-open-text"></i> Email</h3>
+                    <p>contact@minitopia.ro</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="locatie">
+            <h2 class="section-title">🗺️ Unde ne găsești</h2>
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.3rem; margin-bottom: 1rem;">📍 Strada Zâmbetelor nr. 10, București</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.0000000000005!2d26.10000000000001!3d44.433333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff0000000001%3A0x000000000000000!2sStrada%20Z%C3%A2mbetelor%2010%2C%20Bucure%C8%99ti!5e0!3m2!1sro!2sro!4v1700000000000" 
+                            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 Minitopia · Toate drepturile rezervate · Creat cu 🧡 pentru cei mici</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">"Mini world. Maxi fun."</p>
+        </footer>
+    </div>
+
+    <a href="#" class="back-to-top" id="backToTop" title="Înapoi sus"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Three.js -->
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        const canvas = document.getElementById('bg-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 15);
+        camera.lookAt(0, 1, 0);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        dirLight.position.set(2, 5, 5);
+        scene.add(dirLight);
+        const backLight = new THREE.PointLight(0xffccaa, 0.5);
+        backLight.position.set(-3, 1, -5);
+        scene.add(backLight);
+        const balloonsGroup = new THREE.Group();
+        scene.add(balloonsGroup);
+        const balloonColors = [0xff6ec7, 0xa855f7, 0xf97316, 0x22d3ee, 0xfacc15, 0xfb7185, 0x4ade80, 0xf472b6];
+        const balloons = [];
+        const count = 16;
+        for (let i = 0; i < count; i++) {
+            const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            const sphereMat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.2, transparent: true, opacity: 0.8, emissive: new THREE.Color(color).multiplyScalar(0.25) });
+            const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.6, 32, 24), sphereMat);
+            const knotMat = new THREE.MeshStandardMaterial({ color: 0xeeeeee, roughness: 0.5 });
+            const knot = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.22, 8), knotMat);
+            knot.position.y = -0.7;
+            const lineMat = new THREE.MeshStandardMaterial({ color: 0xcccccc });
+            const line = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.4, 6), lineMat);
+            line.position.y = -1.4;
+            const balloon = new THREE.Group();
+            balloon.add(sphere); balloon.add(knot); balloon.add(line);
+            const angle = (i / count) * Math.PI * 2 + Math.random() * 0.8;
+            const radius = 5.5 + Math.random() * 4;
+            balloon.position.x = Math.cos(angle) * radius;
+            balloon.position.z = -9 - Math.random() * 7;
+            balloon.position.y = 1.2 + Math.random() * 5;
+            balloon.rotation.y = Math.random() * Math.PI * 2;
+            balloon.userData = { baseY: balloon.position.y, baseX: balloon.position.x, baseZ: balloon.position.z, floatSpeed: 0.004 + Math.random() * 0.008, floatPhase: Math.random() * Math.PI * 2, rotSpeedY: 0.001 + Math.random() * 0.004, driftSpeed: 0.0015 + Math.random() * 0.003 };
+            balloonsGroup.add(balloon);
+            balloons.push(balloon);
+        }
+        function createCloud(x,y,z,s){ const g=new THREE.Group(); const m=new THREE.MeshStandardMaterial({color:0xffffff,transparent:true,opacity:0.4,roughness:0.8}); [[0,0,0],[1,0.2,0.3],[-1,-0.1,0.2],[0.5,0.6,-0.4],[-0.5,0.5,0.5],[1.2,-0.3,-0.5],[-1.1,0.3,-0.6]].forEach(p=>{const s2=new THREE.Mesh(new THREE.SphereGeometry(0.7,10,10),m);s2.position.set(p[0],p[1],p[2]);g.add(s2);}); g.position.set(x,y,z); g.scale.setScalar(s); return g; }
+        const cloud1=createCloud(-4,4.5,-12,1.2), cloud2=createCloud(5,3.8,-14,1.5), cloud3=createCloud(0,5.2,-16,1.8);
+        balloonsGroup.add(cloud1,cloud2,cloud3);
+        const starsGeo=new THREE.BufferGeometry(), starsCount=400, pos=new Float32Array(starsCount*3);
+        for(let i=0;i<starsCount*3;i+=3){ pos[i]=(Math.random()-0.5)*50; pos[i+1]=(Math.random()-0.5)*35; pos[i+2]=(Math.random()-0.5)*40-10; }
+        starsGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+        const starsMat=new THREE.PointsMaterial({color:0xfff5d1,size:0.1,transparent:true});
+        const stars=new THREE.Points(starsGeo,starsMat); balloonsGroup.add(stars);
+        const clock=new THREE.Clock();
+        function animate(){
+            const et=performance.now()*0.001;
+            balloons.forEach(b=>{ const d=b.userData; b.position.y=d.baseY+Math.sin(et*d.floatSpeed+d.floatPhase)*0.4; b.rotation.y+=d.rotSpeedY; b.position.x=d.baseX+Math.sin(et*d.driftSpeed)*0.5; b.position.z=d.baseZ+Math.cos(et*d.driftSpeed*0.8)*0.4; });
+            stars.rotation.y+=0.0003; cloud1.rotation.y+=0.001; cloud2.rotation.y+=0.0008; cloud3.rotation.y+=0.0012;
+            renderer.render(scene,camera); requestAnimationFrame(animate);
+        }
+        animate();
+        document.addEventListener('mousemove',(e)=>{ const mx=(e.clientX/window.innerWidth)*2-1, my=-(e.clientY/window.innerHeight)*2+1; camera.position.x+=(mx*2.5-camera.position.x)*0.01; camera.position.y+=(my*1.8+2-camera.position.y)*0.01; camera.lookAt(0,1.5,-3); });
+        window.addEventListener('resize',()=>{ renderer.setSize(window.innerWidth,window.innerHeight); camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); });
+    </script>
+
+    <script>
+        (function() {
+            // Darken overlay
+            const darkenOverlay = document.getElementById('darkenOverlay');
+            function updateScrollEffects() {
+                const scrollY = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                let progress = maxScroll > 0 ? Math.min(scrollY / maxScroll, 1) : 0;
+                darkenOverlay.style.opacity = (progress * 0.25).toFixed(2);
+                const r = Math.round(255 + (168 - 255) * progress);
+                const g = Math.round(160 + (230 - 160) * progress);
+                const b = Math.round(122 + (207 - 122) * progress);
+                document.documentElement.style.setProperty('--bg-color', `rgb(${r}, ${g}, ${b})`);
+            }
+            window.addEventListener('scroll', updateScrollEffects);
+            updateScrollEffects();
+
+            // Intro + confetti
+            const introOverlay = document.getElementById('introOverlay');
+            const logoBubble = document.getElementById('logoBubble');
+            function fireConfetti() {
+                confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 }, colors: ['#ff6ec7', '#a855f7', '#f97316', '#22d3ee', '#facc15', '#fb7185'] });
+                confetti({ particleCount: 100, spread: 130, origin: { y: 0.5, x: 0.2 }, colors: ['#a855f7', '#ff6ec7', '#4ade80'] });
+                confetti({ particleCount: 100, spread: 130, origin: { y: 0.5, x: 0.8 }, colors: ['#f97316', '#facc15', '#22d3ee'] });
+                setTimeout(() => { document.querySelectorAll('canvas').forEach(c => { if (c.id !== 'bg-canvas') c.style.zIndex = '10000'; }); }, 10);
+            }
+            function showIntro() { introOverlay.classList.add('active'); fireConfetti(); }
+            function hideIntro() { introOverlay.classList.remove('active'); }
+            logoBubble.addEventListener('click', (e) => { e.preventDefault(); showIntro(); setTimeout(hideIntro, 2800); setTimeout(() => fireConfetti(), 400); setTimeout(() => fireConfetti(), 800); });
+            introOverlay.addEventListener('click', (e) => { if (e.target === introOverlay) hideIntro(); });
+
+            // Pachete + rezervare
+            const cards = document.querySelectorAll('.card[data-package]');
+            const packageSelect = document.getElementById('packageSelect');
+            const kidsInput = document.getElementById('kids');
+            const totalSpan = document.getElementById('totalAmount');
+            const kidsError = document.getElementById('kidsError');
+            
+            function validateKids(showError = true) {
+                const rawValue = kidsInput.value.trim();
+                if (rawValue === '') {
+                    if (showError) kidsError.classList.add('show');
+                    return false;
+                }
+                const val = parseInt(rawValue, 10);
+                const isValid = !isNaN(val) && val >= 1 && val <= 20;
+                if (showError) {
+                    kidsError.classList.toggle('show', !isValid);
+                }
+                return isValid;
+            }
+            
+            function updateTotal() {
+                const pkg = packageSelect.value;
+                const isValid = validateKids(true);
+                let kids = parseInt(kidsInput.value, 10);
+                if (isNaN(kids)) kids = 0;
+                
+                let total = 0;
+                if (pkg === 'party' && isValid) total = 900;
+                else if (pkg === 'explorator' && isValid) total = 50 * kids;
+                else if (pkg === 'aventura' && isValid) total = 120 * kids;
+                totalSpan.textContent = total + ' lei';
+            }
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const pkg = this.getAttribute('data-package');
+                    if (packageSelect) packageSelect.value = pkg;
+                    updateTotal();
+                    document.getElementById('rezervari').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            packageSelect.addEventListener('change', updateTotal);
+            kidsInput.addEventListener('input', () => {
+                validateKids(true);
+                updateTotal();
+            });
+            kidsInput.addEventListener('blur', () => validateKids(true));
+            
+            const form = document.getElementById('reservationForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!packageSelect.value) { alert('Te rog selectează un pachet!'); return; }
+                if (!validateKids(true)) {
+                    kidsInput.focus();
+                    return;
+                }
+                alert('🎉 Rezervarea ta a fost trimisă! Te vom contacta în curând.');
+                form.reset();
+                kidsInput.value = '';
+                totalSpan.textContent = '0 lei';
+                kidsError.classList.remove('show');
+            });
+
+            // Back to top
+            const backBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => { backBtn.classList.toggle('show', window.scrollY > 300); });
+            backBtn.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            
+            updateTotal();
+        })();
+    </script>
+</body>
+</html>
