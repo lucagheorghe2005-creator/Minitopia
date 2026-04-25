@@ -1,0 +1,251 @@
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #FFA07A 0%, #A8E6CF 100%);
+            position: relative;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .darken-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: black; opacity: 0; pointer-events: none; z-index: 1;
+            transition: opacity 0.1s linear;
+        }
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+        .content { position: relative; z-index: 5; }
+        .header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 2rem 3rem; position: relative; z-index: 10;
+        }
+        .logo-wrapper {
+            position: relative; display: inline-block; cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+        }
+        .logo-wrapper:hover { transform: scale(1.08); }
+        .logo-text {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff6ec7, #a855f7, #f97316);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            padding: 0.6rem 1.8rem; border-radius: 100px; position: relative; z-index: 3;
+            letter-spacing: 1px;
+        }
+        .bubble {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: calc(100% + 40px); height: calc(100% + 40px); border-radius: 50%;
+            background: radial-gradient(circle at 28% 25%, 
+                rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.3) 20%,
+                rgba(173,216,255,0.15) 50%, rgba(255,255,255,0.6) 80%,
+                rgba(255,255,255,0.2) 100%);
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.9), inset -8px -8px 15px rgba(0,0,0,0.05),
+                        0 15px 30px rgba(0,0,0,0.1), 0 0 0 2px rgba(255,255,255,0.5);
+            backdrop-filter: blur(3px); z-index: 2; pointer-events: none;
+        }
+        .bubble::after {
+            content: ""; position: absolute; top: 8%; left: 10%; width: 20%; height: 28%;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 80%);
+            border-radius: 50%; opacity: 0.9; transform: rotate(-15deg); filter: blur(1px);
+        }
+        .bubble::before {
+            content: ""; position: absolute; bottom: 12%; right: 10%; width: 14%; height: 18%;
+            background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 80%);
+            border-radius: 50%; opacity: 0.6; filter: blur(1.5px);
+        }
+        .navbar { display: flex; gap: 2.5rem; margin-top: 0.75rem; }
+        .nav-link {
+            font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.2rem;
+            text-decoration: none; color: #1e1e1e; padding: 0.6rem 1.3rem; border-radius: 40px;
+            transition: all 0.25s ease; background: transparent; border: 2px solid transparent;
+        }
+        .nav-link:hover {
+            background-color: black !important; color: var(--bg-color, #FFA07A) !important;
+            border: 2px solid black;
+        }
+        .hero {
+            min-height: 80vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 2rem;
+        }
+        .hero-content { max-width: 800px; animation: floatIn 1s ease-out; }
+        .hero-title {
+            font-family: 'Patrick Hand', cursive; font-size: 4.5rem; color: #1e1e1e;
+            margin-bottom: 1rem; text-shadow: 4px 4px 0 rgba(255,255,255,0.5);
+        }
+        .hero-subtitle { font-size: 1.8rem; color: #2d3748; margin-bottom: 2rem; }
+        .hero-btn {
+            display: inline-block; background-color: #ff6ec7; color: white; font-weight: bold;
+            font-size: 1.3rem; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none;
+            box-shadow: 0 10px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.1s ease; border: 2px solid white;
+        }
+        .hero-btn:hover { transform: translateY(5px); box-shadow: 0 5px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.1); }
+        section { padding: 6rem 3rem; position: relative; z-index: 5; }
+        .section-title {
+            font-family: 'Patrick Hand', cursive; font-size: 3.5rem; color: #1e1e1e;
+            text-align: center; margin-bottom: 3rem; position: relative; display: inline-block;
+            left: 50%; transform: translateX(-50%); padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: ''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 4px;
+            background: linear-gradient(90deg, transparent, #ff6ec7, #a855f7, transparent);
+            border-radius: 4px;
+        }
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem; }
+        .card {
+            background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); border-radius: 30px;
+            padding: 2rem 1.5rem; width: 300px; text-align: center; box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.8); transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 25px 35px rgba(0,0,0,0.15); background: rgba(255,255,255,0.7); }
+        .card-icon { font-size: 4rem; color: #b5179e; margin-bottom: 1rem; }
+        .card h3 { font-size: 2rem; font-family: 'Patrick Hand', cursive; margin-bottom: 0.75rem; color: #1e1e1e; }
+        .card p { font-size: 1.1rem; color: #2d3748; margin-bottom: 1.5rem; }
+        .card-price { font-size: 2.2rem; font-weight: bold; color: #b5179e; }
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+        .gallery-item {
+            background: white; border-radius: 30px; padding: 2rem; width: 180px; text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 3px dashed #ffb6c1; transition: all 0.2s;
+        }
+        .gallery-item i { font-size: 4rem; color: #f97316; }
+        .contact-form {
+            max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px); padding: 2.5rem; border-radius: 40px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1); border: 2px solid white;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1e1e1e; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 1rem; border: 2px solid white; border-radius: 30px;
+            background: rgba(255,255,255,0.8); font-family: 'DM Sans', sans-serif; font-size: 1rem;
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+        }
+        .select-wrapper { position: relative; }
+        .select-wrapper i {
+            position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%);
+            color: #6b21a8; font-size: 1.2rem; pointer-events: none;
+        }
+        .form-group select { cursor: pointer; padding-right: 2.8rem; }
+        .form-group select option {
+            background: rgba(255, 255, 255, 0.95); color: #1e1e1e;
+            padding: 0.5rem; border-radius: 20px; backdrop-filter: blur(4px);
+        }
+        .error-message {
+            margin-top: 0.5rem; color: #d32f2f; font-size: 0.95rem;
+            display: flex; align-items: center; gap: 0.4rem; opacity: 0; transition: opacity 0.2s;
+            background: rgba(255,255,255,0.7); padding: 0.4rem 1rem; border-radius: 30px;
+            backdrop-filter: blur(4px); border: 1px solid #ffb6c1;
+        }
+        .error-message.show { opacity: 1; }
+        .error-message i { color: #d32f2f; font-size: 1.2rem; }
+        .total-box {
+            margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px); border-radius: 30px; text-align: center;
+            border: 2px solid white;
+        }
+        .total-label { font-size: 1.3rem; font-weight: 600; color: #1e1e1e; }
+        .total-amount { font-size: 2.5rem; font-weight: bold; color: #b5179e; font-family: 'Patrick Hand', cursive; }
+        .submit-btn {
+            background-color: #a855f7; color: white; border: none; padding: 1rem 2.5rem;
+            font-size: 1.3rem; font-weight: bold; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 8px 0 #6b21a8, 0 4px 10px rgba(0,0,0,0.1); transition: all 0.1s;
+            border: 2px solid white; width: 100%; margin-top: 1rem;
+        }
+        .submit-btn:hover { transform: translateY(4px); box-shadow: 0 4px 0 #6b21a8, 0 4px 10px rgba(0,0,0,0.1); }
+        .map-container {
+            border-radius: 30px; overflow: hidden; box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            border: 4px solid white; max-width: 900px; margin: 2rem auto 0;
+        }
+        .map-container iframe { width: 100%; height: 300px; display: block; }
+        .footer {
+            text-align: center; padding: 2rem; background: rgba(0,0,0,0.05);
+            backdrop-filter: blur(4px); color: #1e1e1e; border-top: 2px solid rgba(255,255,255,0.5);
+        }
+        .social-icons a { color: #1e1e1e; font-size: 1.8rem; margin: 0 0.8rem; transition: transform 0.2s; display: inline-block; }
+        .social-icons a:hover { transform: scale(1.2); color: #b5179e; }
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px;
+            background: #ff6ec7; color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 1.8rem;
+            box-shadow: 0 8px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid white; cursor: pointer; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.1s, box-shadow 0.1s;
+            z-index: 99; text-decoration: none;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(4px); box-shadow: 0 4px 0 #b5179e, 0 5px 15px rgba(0,0,0,0.2); }
+        .back-to-top:active { transform: translateY(8px); box-shadow: 0 0 0 #b5179e, 0 5px 15px rgba(0,0,0,0.2); }
+        .intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffe4b5;
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
+            transform: translateY(-100%); transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            pointer-events: none;
+        }
+        .intro-overlay.active { transform: translateY(0%); pointer-events: auto; }
+        .intro-content {
+            text-align: center; opacity: 0; transform: scale(0.8);
+            transition: opacity 0.4s ease 0.4s, transform 0.5s ease 0.4s;
+        }
+        .intro-overlay.active .intro-content { opacity: 1; transform: scale(1); }
+        .intro-circle {
+            background-color: white; border-radius: 50%; width: 300px; height: 300px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); padding: 2rem;
+        }
+        .intro-minitopia {
+            font-family: 'Patrick Hand', cursive; font-size: 3.5rem;
+            background: linear-gradient(145deg, #ff4d6d, #b5179e, #7209b7);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            line-height: 1.1;
+        }
+        .intro-slogan { font-family: 'DM Sans', sans-serif; font-size: 1.5rem; color: #22d3ee; margin-top: 0.5rem; }
+        @keyframes floatIn { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 800px) {
+            .header { flex-direction: column; align-items: center; }
+            .navbar { gap: 1rem; }
+            .hero-title { font-size: 3rem; }
+            .back-to-top { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
+        }
+
+.info-img {
+  width: 10%;
+  max-height: 300px;
+  border-radius: 0.6rem;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    background-size: cover;
+    background-position: center ;
+    background-repeat: no-reapet;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.homepage-firstPage:after {
+  content: "";
+  position: absolute;
+  background-image:url('./Assets/BGBaloane2.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: top;
+  opacity: 0.60;
+  height: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.wrapper-homepage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Jost", sans-serif;
+}
