@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Minitopia — Mini world maxi fun!!!</title>
+<meta name="description" content="Minitopia este locul de joacă premium pentru copii din București."/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ===== HOMEPAGE specific ===== */
+.hero{
+  max-width:1280px;margin:0 auto;
+  padding:80px 40px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+  min-height:calc(90vh - var(--nav-h));
+}
+.hero-badge{
+  display:inline-block;
+  background:rgba(255,45,120,.15);
+  color:var(--pink-soft);
+  border:1px solid rgba(255,45,120,.35);
+  font-weight:700;font-size:.85rem;
+  padding:7px 18px;border-radius:99px;
+  margin-bottom:24px;
+}
+.hero h1{
+  font-family:var(--font-head);font-weight:700;
+  font-size:clamp(2.6rem,5.5vw,4.4rem);
+  line-height:1.05;letter-spacing:.01em;
+  margin-bottom:10px;
+}
+.hero h1 .l1{color:var(--yellow);display:block}
+.hero h1 .l2{color:var(--pink);display:block}
+body.light .hero h1 .l1{color:var(--purple)}
+.hero-sub{
+  font-family:var(--font-head);font-style:italic;
+  color:var(--pink);font-size:1.5rem;
+  margin:18px 0 14px;
+}
+.hero-desc{
+  color:var(--text-soft);
+  line-height:1.75;font-size:1.05rem;
+  max-width:440px;margin-bottom:34px;
+}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px}
+
+.hero-img-wrap{position:relative}
+.hero-img-wrap img{
+  width:100%;height:500px;object-fit:cover;
+  border-radius:24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.hero-rating{
+  position:absolute;bottom:20px;left:20px;
+  background:rgba(255,210,63,.95);color:#1a1200;
+  font-weight:800;font-size:.9rem;
+  padding:10px 18px;border-radius:99px;
+  display:flex;align-items:center;gap:6px;
+}
+
+/* ACTIVITATI */
+.section{padding:80px 24px;max-width:1280px;margin:0 auto}
+.section-title{
+  font-family:var(--font-head);font-weight:700;
+  font-size:clamp(1.9rem,4vw,2.8rem);
+  color:var(--yellow);text-align:center;
+  margin-bottom:14px;letter-spacing:.01em;
+}
+.section-sub{
+  text-align:center;color:var(--muted);
+  font-size:1rem;margin-bottom:48px;
+}
+
+.act-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.act-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.act-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--shadow-lg);
+  border-color:var(--border-2);
+}
+.act-card img{
+  width:100%;height:200px;object-fit:cover;
+  transition:transform .4s;
+}
+.act-card:hover img{transform:scale(1.06)}
+.act-body{padding:20px 22px 24px}
+.act-icon{font-size:1.6rem;display:block;margin-bottom:6px}
+.act-body h3{
+  font-family:var(--font-head);font-weight:600;
+  font-size:1.15rem;color:var(--yellow);
+  margin-bottom:6px;
+}
+.act-body p{font-size:.88rem;color:var(--muted);line-height:1.6}
+
+/* WHY (4 carduri cu iconite portocalii) */
+.why-section{padding:60px 24px;max-width:1280px;margin:0 auto}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:36px 24px;
+  text-align:center;
+  transition:transform .3s;
+}
+.why-card:hover{transform:translateY(-4px)}
+.why-icon-wrap{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(255,140,66,.15);
+  margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;color:var(--orange);
+}
+.why-card h3{
+  font-family:var(--font-head);font-weight:600;
+  font-size:1.05rem;color:var(--white);
+  margin-bottom:8px;
+}
+body.light .why-card h3{color:var(--text)}
+.why-card p{font-size:.86rem;color:var(--muted)}
+
+/* CTA Banner cu border roz */
+.cta-banner{
+  max-width:1100px;margin:60px auto 80px;
+  border:2px solid var(--pink);
+  border-radius:var(--radius-lg);
+  padding:56px 40px;text-align:center;
+  background:rgba(255,45,120,.05);
+}
+.cta-banner h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:2.4rem;color:var(--yellow);
+  margin-bottom:12px;
+}
+.cta-banner p{
+  color:var(--muted);font-size:1rem;
+  margin-bottom:28px;
+}
+
+@media(max-width:1024px){
+  .act-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding:40px 20px 60px;text-align:center;gap:32px}
+  .hero-desc{max-width:100%}
+  .hero-btns{justify-content:center}
+  .hero-img-wrap img{height:300px}
+  .act-grid,.why-grid{grid-template-columns:1fr}
+  .cta-banner{padding:36px 24px;margin:32px 20px 60px}
+  .section{padding:48px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span>
+      <span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html">Despre Noi</a>
+      <a href="pachete.html">Pachete &amp; Tarife</a>
+      <a href="evenimente.html">Evenimente</a>
+      <a href="rezervari.html">Rezervări</a>
+      <a href="contact.html">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html">Locație</a>
+    </nav>
+    <button class="theme-toggle" title="Schimbă tema">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a>
+  <a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a>
+  <a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a>
+  <a href="recenzii.html">Review-uri</a>
+  <a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content reveal">
+      <div class="hero-badge">✨ Loc de joacă premium în București</div>
+      <h1><span class="l1">Bine ai venit în</span><span class="l2">Minitopia!</span></h1>
+      <div class="hero-sub">Mini world maxi fun!!!</div>
+      <p class="hero-desc">Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="hero-btns">
+        <a href="rezervari.html" class="btn btn-pink">Hai să ne jucăm! 🎉</a>
+        <a href="pachete.html" class="btn btn-yellow-outline">Vezi Pachete →</a>
+      </div>
+    </div>
+    <div class="hero-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=900&q=85" alt="Loc de joacă Minitopia"/>
+      <div class="hero-rating">⭐ 4.9/5 părinți fericiți</div>
+    </div>
+  </section>
+
+  <!-- ACTIVITATI -->
+  <section class="section">
+    <h2 class="section-title">Ce poți face la Minitopia?</h2>
+    <p class="section-sub">Activități create cu grijă pentru fiecare vârstă și pasiune.</p>
+    <div class="act-grid">
+      <div class="act-card reveal">
+        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt="Atelier"/>
+        <div class="act-body"><span class="act-icon">🎨</span><h3>Atelier de Creație</h3><p>Pictură, modelaj și meșteșuguri pentru micii artiști.</p></div>
+      </div>
+      <div class="act-card reveal">
+        <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=600&q=80" alt="Cățărat"/>
+        <div class="act-body"><span class="act-icon">🧗</span><h3>Locuri de Cățărat</h3><p>Structuri colorate, sigure și pline de aventură.</p></div>
+      </div>
+      <div class="act-card reveal">
+        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80" alt="Petreceri"/>
+        <div class="act-body"><span class="act-icon">🎂</span><h3>Petreceri Tematice</h3><p>Aniversări de neuitat cu decor și animatori.</p></div>
+      </div>
+      <div class="act-card reveal">
+        <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&q=80" alt="Jocuri"/>
+        <div class="act-body"><span class="act-icon">🎭</span><h3>Jocuri de Rol</h3><p>Costume și scenarii pentru imaginație fără limite.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why-section">
+    <h2 class="section-title">De ce Minitopia?</h2>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon-wrap">✨</div>
+        <h3>Distracție garantată</h3><p>Fiecare zi e o nouă aventură.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon-wrap">🛡️</div>
+        <h3>Siguranță maximă</h3><p>Echipamente certificate și supraveghere.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon-wrap">🎉</div>
+        <h3>Petreceri tematice</h3><p>Pachete personalizate pentru orice ocazie.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon-wrap">👥</div>
+        <h3>Echipă dedicată</h3><p>Animatori profesioniști și pasionați.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner reveal">
+    <h2>Fă o rezervare acum!</h2>
+    <p>Oferă-le copiilor o zi de neuitat la Minitopia.</p>
+    <a href="rezervari.html" class="btn btn-pink">Rezervă acum →</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">🎈</span>
+        <span class="nav-logo-text">Minitopia</span>
+      </a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigație</h4>
+      <ul>
+        <li><a href="index.html">Acasă</a></li>
+        <li><a href="despre.html">Despre Noi</a></li>
+        <li><a href="pachete.html">Pachete &amp; Tarife</a></li>
+        <li><a href="evenimente.html">Evenimente</a></li>
+        <li><a href="rezervari.html">Rezervări</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+        <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+        <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Program</h4>
+      <ul>
+        <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+        <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+</body>
+</html>

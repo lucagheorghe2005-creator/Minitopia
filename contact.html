@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact — Minitopia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.ct-wrap{
+  max-width:1100px;margin:0 auto;
+  padding:30px 24px 60px;
+  display:grid;grid-template-columns:1fr 1.3fr;gap:32px;
+  align-items:start;
+}
+.ct-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:36px 32px;
+}
+.ct-card h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.3rem;color:var(--yellow);
+  margin-bottom:26px;
+}
+
+.ct-info-item{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:18px;
+}
+.ct-info-item .icon{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,45,120,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;flex-shrink:0;
+}
+.ct-info-item .txt{font-size:.92rem;color:var(--text)}
+.ct-info-item .txt a{color:var(--pink);font-weight:700}
+.ct-info-item .txt a:hover{text-decoration:underline}
+
+.ct-social{display:flex;gap:10px;margin-top:24px}
+.ct-social a{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--bg-card-2);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;
+  transition:background .2s,transform .2s;
+}
+.ct-social a:hover{background:var(--pink);transform:scale(1.1)}
+
+/* form */
+.ct-form .form-group{margin-bottom:14px}
+.ct-form input,
+.ct-form select,
+.ct-form textarea{padding:12px 16px}
+
+.ct-success{display:none;text-align:center;padding:24px 16px}
+.ct-success .s-icon{font-size:3rem;margin-bottom:10px}
+.ct-success h3{
+  font-family:var(--font-head);
+  font-size:1.4rem;color:var(--yellow);
+  margin-bottom:8px;
+}
+
+@media(max-width:768px){
+  .ct-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html">Despre Noi</a>
+      <a href="pachete.html">Pachete &amp; Tarife</a>
+      <a href="evenimente.html">Evenimente</a>
+      <a href="rezervari.html">Rezervări</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html">Locație</a>
+    </nav>
+    <button class="theme-toggle">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a><a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a><a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a><a href="recenzii.html">Review-uri</a><a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <a href="index.html" class="back-link">Înapoi la Homepage</a>
+    <h1>Contactează-ne 📬</h1>
+    <p>Suntem aici pentru orice întrebare sau cerere.</p>
+  </div>
+
+  <div class="ct-wrap">
+    <!-- Info -->
+    <div class="ct-card reveal">
+      <h2>Date de contact</h2>
+      <div class="ct-info-item">
+        <div class="icon">📞</div>
+        <div class="txt"><a href="tel:+40764292754">+40 764 292 754</a></div>
+      </div>
+      <div class="ct-info-item">
+        <div class="icon">📍</div>
+        <div class="txt">Strada Veseliei, Nr. 10, Sector 5, București</div>
+      </div>
+      <div class="ct-info-item">
+        <div class="icon">✉️</div>
+        <div class="txt"><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></div>
+      </div>
+      <div class="ct-info-item">
+        <div class="icon">🕐</div>
+        <div class="txt">Luni–Vineri: 10:00–20:00<br/>Sâmbătă–Duminică: 09:00–21:00</div>
+      </div>
+      <div class="ct-social">
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="TikTok">🎵</a>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="ct-card reveal">
+      <h2>Trimite un mesaj</h2>
+      <form class="ct-form" id="ctForm" novalidate>
+        <div class="form-group">
+          <input type="text" id="ct-name" placeholder="Nume"/>
+          <span class="form-error" id="ct-err-name">Câmp obligatoriu</span>
+        </div>
+        <div class="form-group">
+          <input type="email" id="ct-email" placeholder="Email"/>
+          <span class="form-error" id="ct-err-email">Câmp obligatoriu</span>
+        </div>
+        <div class="form-group">
+          <input type="tel" id="ct-phone" placeholder="Telefon"/>
+        </div>
+        <div class="form-group">
+          <select id="ct-subject">
+            <option value="">Subiect</option>
+            <option>Rezervare</option>
+            <option>Întrebare</option>
+            <option>Feedback</option>
+            <option>Altul</option>
+          </select>
+          <span class="form-error" id="ct-err-subject">Câmp obligatoriu</span>
+        </div>
+        <div class="form-group">
+          <textarea id="ct-msg" placeholder="Mesaj" style="min-height:120px"></textarea>
+          <span class="form-error" id="ct-err-msg">Câmp obligatoriu</span>
+        </div>
+        <button type="submit" class="btn btn-pink btn-full" style="margin-top:6px">Trimite Mesajul →</button>
+      </form>
+      <div class="ct-success" id="ctSuccess">
+        <div class="s-icon">✅</div>
+        <h3>Mesaj trimis!</h3>
+        <p style="color:var(--muted)">Îți vom răspunde în cel mai scurt timp. Mulțumim!</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link-center">‹ Înapoi la Homepage</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span></a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col"><h4>Navigație</h4><ul>
+      <li><a href="index.html">Acasă</a></li><li><a href="despre.html">Despre Noi</a></li>
+      <li><a href="pachete.html">Pachete &amp; Tarife</a></li><li><a href="evenimente.html">Evenimente</a></li>
+      <li><a href="rezervari.html">Rezervări</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul>
+      <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+      <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+      <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Program</h4><ul>
+      <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+      <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+<script>
+  const ctForm = document.getElementById('ctForm');
+  const ctSuccess = document.getElementById('ctSuccess');
+  const ctReq = [['ct-name','ct-err-name'],['ct-email','ct-err-email'],['ct-subject','ct-err-subject'],['ct-msg','ct-err-msg']];
+  ctForm.addEventListener('submit', e => {
+    e.preventDefault();
+    let valid = true;
+    ctReq.forEach(([id, errId]) => {
+      const el = document.getElementById(id), err = document.getElementById(errId);
+      if (!el.value.trim()) { err.classList.add('show'); valid = false; }
+      else err.classList.remove('show');
+    });
+    if (!valid) { shakeEl(ctForm); return; }
+    const btn = ctForm.querySelector('button');
+    btn.textContent = 'Se trimite... ⏳'; btn.disabled = true;
+    setTimeout(() => {
+      ctForm.style.display = 'none';
+      ctSuccess.style.display = 'block';
+    }, 1100);
+  });
+  ctReq.forEach(([id, errId]) => {
+    document.getElementById(id).addEventListener('input', () => {
+      document.getElementById(errId).classList.remove('show');
+    });
+  });
+</script>
+</body>
+</html>

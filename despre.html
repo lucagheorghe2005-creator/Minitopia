@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Despre Noi — Minitopia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* DESPRE NOI specific */
+.story{
+  max-width:1180px;margin:0 auto;
+  padding:40px 40px 80px;
+  display:grid;grid-template-columns:1fr 1.1fr;gap:60px;
+  align-items:center;
+}
+.story-text h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:2rem;color:var(--yellow);
+  margin-bottom:22px;
+}
+.story-text p{
+  color:var(--text-soft);line-height:1.85;
+  margin-bottom:16px;font-size:.98rem;
+}
+.story-img img{
+  width:100%;height:440px;object-fit:cover;
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-lg);
+}
+
+/* VALORI 4 cards */
+.values{padding:60px 24px;max-width:1180px;margin:0 auto}
+.values h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:2rem;color:var(--yellow);
+  text-align:center;margin-bottom:40px;
+}
+.val-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.val-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:36px 22px;
+  text-align:center;transition:transform .3s;
+}
+.val-card:hover{transform:translateY(-5px)}
+.val-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(255,45,120,.15);
+  margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;color:var(--pink);
+}
+.val-card h3{
+  font-family:var(--font-head);font-weight:600;
+  font-size:1.05rem;color:var(--white);
+  margin-bottom:8px;
+}
+body.light .val-card h3{color:var(--text)}
+.val-card p{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+/* ECHIPA */
+.team{padding:60px 24px;max-width:1180px;margin:0 auto}
+.team h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:2rem;color:var(--yellow);
+  text-align:center;margin-bottom:40px;
+}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:40px 24px;text-align:center;
+  transition:transform .3s;
+}
+.team-card:hover{transform:translateY(-5px)}
+.team-avatar{
+  width:74px;height:74px;border-radius:50%;
+  margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.4rem;color:#fff;
+}
+.team-card h3{
+  font-family:var(--font-head);font-weight:600;
+  font-size:1.1rem;color:var(--white);
+  margin-bottom:4px;
+}
+body.light .team-card h3{color:var(--text)}
+.team-card p{font-size:.88rem;color:var(--muted)}
+
+/* GALERIE - orizontal scroll */
+.gallery-section{padding:40px 24px 20px;max-width:1280px;margin:0 auto}
+.gallery-section h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.4rem;color:var(--yellow);
+  margin-bottom:20px;padding-left:8px;
+}
+.gallery-scroll{
+  display:flex;gap:16px;overflow-x:auto;
+  padding:0 8px 16px;
+  scrollbar-color:var(--purple) var(--bg-card);
+}
+.gallery-scroll img{
+  width:280px;height:200px;flex-shrink:0;
+  object-fit:cover;border-radius:var(--radius);
+}
+
+@media(max-width:1024px){
+  .val-grid{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .story{grid-template-columns:1fr;padding:24px 20px 56px;gap:32px}
+  .story-img img{height:280px}
+  .val-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html" class="active">Despre Noi</a>
+      <a href="pachete.html">Pachete &amp; Tarife</a>
+      <a href="evenimente.html">Evenimente</a>
+      <a href="rezervari.html">Rezervări</a>
+      <a href="contact.html">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html">Locație</a>
+    </nav>
+    <button class="theme-toggle">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a><a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a><a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a><a href="recenzii.html">Review-uri</a><a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <a href="index.html" class="back-link">Înapoi la Homepage</a>
+    <h1>Despre Noi 🧸</h1>
+    <p>Un univers în miniatură creat cu dragoste pentru cei mici.</p>
+  </div>
+
+  <!-- STORY -->
+  <div class="story">
+    <div class="story-text reveal">
+      <h2>Povestea noastră</h2>
+      <p>Minitopia s-a născut din dorința de a oferi copiilor din București un loc unde să se joace în siguranță, să-și dezvolte creativitatea și să trăiască amintiri de neuitat alături de prieteni și familie.</p>
+      <p>Calitatea serviciilor și grija pentru fiecare copil ne diferențiază. Părinții ne aleg pentru că știu că aici cei mici sunt în mâini bune – și se distrează maxim.</p>
+    </div>
+    <div class="story-img reveal">
+      <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=900&q=80" alt="Interior Minitopia"/>
+    </div>
+  </div>
+
+  <!-- VALORI -->
+  <section class="values">
+    <h2>Valorile noastre</h2>
+    <div class="val-grid">
+      <div class="val-card reveal">
+        <div class="val-icon">🛡️</div>
+        <h3>Siguranță</h3><p>Echipamente certificate și personal instruit.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon">✨</div>
+        <h3>Creativitate</h3><p>Activități ce stimulează imaginația.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon">🎉</div>
+        <h3>Distracție</h3><p>Zâmbete largi și energie debordantă.</p>
+      </div>
+      <div class="val-card reveal">
+        <div class="val-icon">❤️</div>
+        <h3>Familie</h3><p>Un spațiu primitor pentru toată familia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECHIPA -->
+  <section class="team">
+    <h2>Echipa noastră</h2>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#FF2D78,#ff6ba8)">AP</div>
+        <h3>Ana Popescu</h3><p>Fondator &amp; Director</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#FF8C42,#FFD23F)">MI</div>
+        <h3>Mihai Ionescu</h3><p>Coordonator Animatori</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#7C3AED,#a855f7)">EV</div>
+        <h3>Elena Vasilescu</h3><p>Specialist Evenimente</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section class="gallery-section reveal">
+    <h2>Galerie</h2>
+    <div class="gallery-scroll">
+      <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt="Galerie"/>
+      <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&q=80" alt="Galerie"/>
+      <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80" alt="Galerie"/>
+      <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&q=80" alt="Galerie"/>
+      <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=600&q=80" alt="Galerie"/>
+    </div>
+  </section>
+
+  <a href="index.html" class="back-link-center">‹ Înapoi la Homepage</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span></a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col"><h4>Navigație</h4><ul>
+      <li><a href="index.html">Acasă</a></li><li><a href="despre.html">Despre Noi</a></li>
+      <li><a href="pachete.html">Pachete &amp; Tarife</a></li><li><a href="evenimente.html">Evenimente</a></li>
+      <li><a href="rezervari.html">Rezervări</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul>
+      <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+      <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+      <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Program</h4><ul>
+      <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+      <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+</body>
+</html>

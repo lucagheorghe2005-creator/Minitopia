@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Evenimente — Minitopia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.ev-cards{
+  max-width:1180px;margin:0 auto;
+  padding:30px 24px 60px;
+  display:flex;flex-direction:column;gap:28px;
+}
+.ev-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.ev-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+  border-color:var(--border-2);
+}
+.ev-card.reverse{direction:rtl}
+.ev-card.reverse > *{direction:ltr}
+.ev-card img{
+  width:100%;height:100%;min-height:340px;
+  object-fit:cover;
+}
+.ev-body{
+  padding:48px 44px;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:14px;
+}
+.ev-icon{font-size:2rem}
+.ev-body h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.7rem;color:var(--yellow);
+}
+.ev-body p{
+  color:var(--text-soft);
+  line-height:1.75;font-size:.96rem;
+}
+.ev-body .btn{align-self:flex-start;margin-top:8px}
+
+/* MOMENTS GRID 2x2 */
+.moments{max-width:1180px;margin:0 auto;padding:0 24px 60px}
+.moments h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.5rem;color:var(--yellow);
+  margin-bottom:20px;padding-left:8px;
+}
+.moments-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.moments-grid img{
+  width:100%;height:280px;object-fit:cover;
+  border-radius:var(--radius);
+}
+
+@media(max-width:768px){
+  .ev-card,.ev-card.reverse{grid-template-columns:1fr;direction:ltr}
+  .ev-card img{min-height:220px}
+  .ev-body{padding:28px 24px}
+  .moments-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html">Despre Noi</a>
+      <a href="pachete.html">Pachete &amp; Tarife</a>
+      <a href="evenimente.html" class="active">Evenimente</a>
+      <a href="rezervari.html">Rezervări</a>
+      <a href="contact.html">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html">Locație</a>
+    </nav>
+    <button class="theme-toggle">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a><a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a><a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a><a href="recenzii.html">Review-uri</a><a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <a href="index.html" class="back-link">Înapoi la Homepage</a>
+    <h1>Evenimente Speciale 🎈</h1>
+    <p>Transformăm fiecare ocazie specială într-o amintire de neuitat.</p>
+  </div>
+
+  <div class="ev-cards">
+    <!-- ANIVERSARI -->
+    <div class="ev-card reveal">
+      <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80" alt="Aniversări"/>
+      <div class="ev-body">
+        <div class="ev-icon">🎂</div>
+        <h2>Aniversări</h2>
+        <p>Decorațiuni personalizate, tort delicios, animatori și sală exclusivă pentru ziua specială.</p>
+        <a href="rezervari.html" class="btn btn-pink">Planifică Aniversarea →</a>
+      </div>
+    </div>
+
+    <!-- PETRECERI TEMATICE -->
+    <div class="ev-card reverse reveal">
+      <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=900&q=80" alt="Petreceri Tematice"/>
+      <div class="ev-body">
+        <div class="ev-icon">🦸</div>
+        <h2>Petreceri Tematice</h2>
+        <p>Teme disponibile: supereroi, prințese, dinozauri, spațiu cosmic și multe altele.</p>
+        <a href="rezervari.html" class="btn btn-pink">Alege Tema →</a>
+      </div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="ev-card reveal">
+      <img src="https://images.unsplash.com/photo-1511949860663-92c5c57d48a7?w=900&q=80" alt="Evenimente Corporate"/>
+      <div class="ev-body">
+        <div class="ev-icon">👨‍👩‍👧‍👦</div>
+        <h2>Evenimente Corporate / Familiale</h2>
+        <p>Spații generoase pentru grupuri mari, catering disponibil și activități pentru toate vârstele.</p>
+        <a href="contact.html" class="btn btn-pink">Solicită Ofertă →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOMENTS -->
+  <section class="moments reveal">
+    <h2>Momente de la evenimentele noastre</h2>
+    <div class="moments-grid">
+      <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80" alt=""/>
+      <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&q=80" alt=""/>
+      <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt=""/>
+      <img src="https://images.unsplash.com/photo-1511949860663-92c5c57d48a7?w=600&q=80" alt=""/>
+    </div>
+  </section>
+
+  <a href="index.html" class="back-link-center">‹ Înapoi la Homepage</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span></a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col"><h4>Navigație</h4><ul>
+      <li><a href="index.html">Acasă</a></li><li><a href="despre.html">Despre Noi</a></li>
+      <li><a href="pachete.html">Pachete &amp; Tarife</a></li><li><a href="evenimente.html">Evenimente</a></li>
+      <li><a href="rezervari.html">Rezervări</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul>
+      <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+      <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+      <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Program</h4><ul>
+      <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+      <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+</body>
+</html>

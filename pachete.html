@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Pachete &amp; Tarife — Minitopia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* PACHETE & TARIFE */
+.pachete-hero h1 .icon{display:inline-block;margin-left:8px}
+.pachete-wrap{
+  max-width:1180px;margin:0 auto;
+  padding:30px 24px 60px;
+}
+.pachete-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:28px;align-items:start;
+}
+.pachet{
+  background:var(--bg-card);
+  border:2px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:36px 30px;
+  position:relative;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.pachet:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.pachet.mini{border-color:var(--yellow)}
+.pachet.maxi{border-color:var(--pink);box-shadow:0 0 40px rgba(255,45,120,.15)}
+.pachet.party{border-color:var(--purple)}
+
+.popular-badge{
+  position:absolute;top:-14px;left:50%;
+  transform:translateX(-50%);
+  background:var(--yellow);color:#1a1200;
+  font-weight:800;font-size:.78rem;
+  padding:6px 16px;border-radius:99px;
+  white-space:nowrap;
+}
+
+.pachet-name{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.6rem;color:var(--yellow);
+  margin-bottom:14px;
+}
+.pachet-price{
+  font-family:var(--font-head);font-weight:700;
+  font-size:2.2rem;color:var(--pink);
+  line-height:1;
+  display:flex;align-items:baseline;gap:6px;
+  flex-wrap:wrap;
+}
+.pachet-price .unit{
+  font-size:.95rem;color:var(--muted);
+  font-family:var(--font-body);font-weight:600;
+}
+.pachet-dur{
+  font-size:.85rem;color:var(--muted);
+  margin:8px 0 24px;
+}
+.pachet-list{display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+.pachet-list li{
+  font-size:.92rem;color:var(--text);
+  display:flex;align-items:center;gap:10px;
+}
+.pachet-list li .chk{
+  color:var(--pink);font-weight:900;font-size:1.05rem;
+}
+
+/* FAQ */
+.faq{
+  max-width:780px;margin:0 auto;
+  padding:20px 24px 60px;
+}
+.faq h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:2rem;color:var(--yellow);
+  text-align:center;margin-bottom:32px;
+}
+.faq-item{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:12px;
+  overflow:hidden;
+}
+.faq-q{
+  width:100%;background:none;border:none;
+  padding:18px 24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--font-body);font-weight:700;
+  font-size:.95rem;color:var(--text);
+  text-align:left;cursor:pointer;
+  transition:color .2s;
+}
+.faq-q:hover{color:var(--yellow)}
+.faq-arrow{
+  font-size:1rem;color:var(--pink);
+  transition:transform .3s;
+}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease;
+  padding:0 24px;
+  font-size:.9rem;color:var(--muted);line-height:1.7;
+}
+.faq-item.open .faq-a{
+  max-height:240px;padding:0 24px 18px;
+}
+
+@media(max-width:900px){
+  .pachete-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html">Despre Noi</a>
+      <a href="pachete.html" class="active">Pachete &amp; Tarife</a>
+      <a href="evenimente.html">Evenimente</a>
+      <a href="rezervari.html">Rezervări</a>
+      <a href="contact.html">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html">Locație</a>
+    </nav>
+    <button class="theme-toggle">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a><a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a><a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a><a href="recenzii.html">Review-uri</a><a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-hero pachete-hero">
+    <a href="index.html" class="back-link">Înapoi la Homepage</a>
+    <h1>Pachete &amp; Tarife <span class="icon">🎟️</span></h1>
+    <p>Alegem pachetul perfect pentru micuțul tău aventurier.</p>
+  </div>
+
+  <div class="pachete-wrap">
+    <div class="pachete-grid">
+
+      <!-- MINI -->
+      <div class="pachet mini reveal">
+        <div class="pachet-name">Pachet Mini</div>
+        <div class="pachet-price">50 RON<span class="unit">/copil</span></div>
+        <div class="pachet-dur">Durată: 2 ore</div>
+        <ul class="pachet-list">
+          <li><span class="chk">✓</span>Acces la zona de joacă</li>
+          <li><span class="chk">✓</span>Supraveghere</li>
+          <li><span class="chk">✓</span>1 gustare</li>
+        </ul>
+        <a href="rezervari.html" class="btn btn-yellow-outline btn-full">Rezervă Pachet Mini</a>
+      </div>
+
+      <!-- MAXI (popular) -->
+      <div class="pachet maxi reveal">
+        <div class="popular-badge">Cel mai popular ⭐</div>
+        <div class="pachet-name">Pachet Maxi</div>
+        <div class="pachet-price">80 RON<span class="unit">/copil</span></div>
+        <div class="pachet-dur">Durată: 3 ore</div>
+        <ul class="pachet-list">
+          <li><span class="chk">✓</span>Acces complet</li>
+          <li><span class="chk">✓</span>Supraveghere</li>
+          <li><span class="chk">✓</span>2 gustări</li>
+          <li><span class="chk">✓</span>1 activitate tematică</li>
+        </ul>
+        <a href="rezervari.html" class="btn btn-pink btn-full">Rezervă Pachet Maxi</a>
+      </div>
+
+      <!-- PARTY -->
+      <div class="pachet party reveal">
+        <div class="pachet-name">Pachet Party</div>
+        <div class="pachet-price" style="font-size:1.7rem">De la 500 RON<span class="unit">/eveniment</span></div>
+        <div class="pachet-dur">Durată: 4 ore</div>
+        <ul class="pachet-list">
+          <li><span class="chk">✓</span>Sală rezervată</li>
+          <li><span class="chk">✓</span>Tort</li>
+          <li><span class="chk">✓</span>Decorațiuni</li>
+          <li><span class="chk">✓</span>Animatori</li>
+          <li><span class="chk">✓</span>10 copii incluși</li>
+        </ul>
+        <a href="contact.html" class="btn btn-yellow-outline btn-full">Contactează-ne pentru detalii</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>Întrebări frecvente</h2>
+    <div class="faq-item reveal">
+      <button class="faq-q">Cum pot face o rezervare?<span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Poți face o rezervare completând formularul de pe pagina Rezervări sau sunând la +40 764 292 754.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">Ce vârstă trebuie să aibă copiii?<span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Minitopia este deschis copiilor cu vârste între 1 și 12 ani. Avem zone separate pentru diferite grupe de vârstă.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">Pot aduce mâncare de acasă?<span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Da, gustările și băuturile personale sunt permise. Avem și un spațiu de luat masa disponibil.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">Cum asigurați siguranța copiilor?<span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Toate echipamentele sunt certificate și verificate regulat. Animatorii noștri sunt instruiți în prim ajutor și supraveghere.</div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q">Ce metode de plată acceptați?<span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Acceptăm numerar, card bancar (Visa/Mastercard) și plată online prin transfer bancar.</div>
+    </div>
+  </section>
+
+  <a href="index.html" class="back-link-center">‹ Înapoi la Homepage</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span></a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col"><h4>Navigație</h4><ul>
+      <li><a href="index.html">Acasă</a></li><li><a href="despre.html">Despre Noi</a></li>
+      <li><a href="pachete.html">Pachete &amp; Tarife</a></li><li><a href="evenimente.html">Evenimente</a></li>
+      <li><a href="rezervari.html">Rezervări</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul>
+      <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+      <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+      <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Program</h4><ul>
+      <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+      <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

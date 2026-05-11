@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Locație — Minitopia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.loc-wrap{
+  max-width:1180px;margin:0 auto;
+  padding:20px 24px 40px;
+  display:grid;grid-template-columns:1.7fr 1fr;gap:24px;
+  align-items:stretch;
+}
+.map-box{
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-lg);
+}
+.map-box iframe{display:block;width:100%;height:420px;border:0}
+
+.qr-box{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:32px 24px;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+}
+.qr-box h3{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.1rem;color:var(--yellow);
+  margin-bottom:18px;
+}
+.qr-img{
+  width:170px;height:170px;
+  background:#fff;border-radius:14px;
+  padding:10px;
+  margin-bottom:14px;
+}
+.qr-img img{width:100%;height:100%;display:block}
+.qr-box p{font-size:.82rem;color:var(--muted)}
+
+.transport{
+  max-width:1180px;margin:0 auto;
+  padding:30px 24px 30px;
+}
+.transport h2{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.8rem;color:var(--yellow);
+  text-align:center;margin-bottom:32px;
+}
+.trans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.trans-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:32px 22px;text-align:center;
+  transition:transform .3s;
+}
+.trans-card:hover{transform:translateY(-4px)}
+.trans-icon{
+  width:54px;height:54px;border-radius:50%;
+  background:rgba(168,85,247,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin:0 auto 14px;
+}
+.trans-card h3{
+  font-family:var(--font-head);font-weight:600;
+  font-size:1.05rem;color:var(--white);
+  margin-bottom:8px;
+}
+body.light .trans-card h3{color:var(--text)}
+.trans-card p{font-size:.86rem;color:var(--muted);line-height:1.6}
+
+@media(max-width:768px){
+  .loc-wrap{grid-template-columns:1fr}
+  .trans-grid{grid-template-columns:1fr}
+  .map-box iframe{height:280px}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html">Despre Noi</a>
+      <a href="pachete.html">Pachete &amp; Tarife</a>
+      <a href="evenimente.html">Evenimente</a>
+      <a href="rezervari.html">Rezervări</a>
+      <a href="contact.html">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html" class="active">Locație</a>
+    </nav>
+    <button class="theme-toggle">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a><a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a><a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a><a href="recenzii.html">Review-uri</a><a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <a href="index.html" class="back-link">Înapoi la Homepage</a>
+    <h1>Unde ne găsești 📍</h1>
+    <p>Strada Veseliei, Nr. 10, Sector 5, București</p>
+  </div>
+
+  <div class="loc-wrap">
+    <div class="map-box reveal">
+      <iframe
+        src="https://www.google.com/maps?q=Sector+5,Bucharest,Romania&output=embed"
+        loading="lazy"
+        title="Minitopia pe hartă">
+      </iframe>
+    </div>
+    <div class="qr-box reveal">
+      <h3>Scanează &amp; navighează</h3>
+      <div class="qr-img">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fwww.google.com%2Fmaps%3Fq%3DSector%2B5%2CBucharest%2CRomania" alt="Cod QR locație Minitopia"/>
+      </div>
+      <p>Deschide harta direct pe telefon</p>
+    </div>
+  </div>
+
+  <div class="transport">
+    <h2>Cum ajungi la noi</h2>
+    <div class="trans-grid">
+      <div class="trans-card reveal">
+        <div class="trans-icon">🚇</div>
+        <h3>Metrou</h3>
+        <p>Stația Eroilor (M1/M3), apoi 5 min de mers pe jos.</p>
+      </div>
+      <div class="trans-card reveal">
+        <div class="trans-icon">🚌</div>
+        <h3>Autobuz</h3>
+        <p>Liniile 122, 385, 601 – stația Veseliei.</p>
+      </div>
+      <div class="trans-card reveal">
+        <div class="trans-icon">🚗</div>
+        <h3>Parcare</h3>
+        <p>Parcare gratuită disponibilă în vecinătate.</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link-center">‹ Înapoi la Homepage</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span></a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col"><h4>Navigație</h4><ul>
+      <li><a href="index.html">Acasă</a></li><li><a href="despre.html">Despre Noi</a></li>
+      <li><a href="pachete.html">Pachete &amp; Tarife</a></li><li><a href="evenimente.html">Evenimente</a></li>
+      <li><a href="rezervari.html">Rezervări</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul>
+      <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+      <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+      <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Program</h4><ul>
+      <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+      <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+</body>
+</html>

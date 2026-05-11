@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Rezervări — Minitopia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.rez-wrap{
+  max-width:540px;margin:0 auto;
+  padding:20px 24px 60px;
+}
+.rez-form{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:36px 30px;
+}
+.rez-form .form-group input,
+.rez-form .form-group select,
+.rez-form .form-group textarea{
+  background:var(--bg-input);
+  border:1.5px solid var(--border);
+  border-radius:14px;
+}
+.rez-phone{
+  text-align:center;
+  margin-top:18px;
+  font-size:.88rem;color:var(--muted);
+}
+.rez-phone a{color:var(--pink);font-weight:700}
+.rez-phone a:hover{text-decoration:underline}
+
+.success-box{
+  display:none;text-align:center;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:48px 28px;
+}
+.success-box .s-icon{font-size:3.5rem;margin-bottom:16px}
+.success-box h3{
+  font-family:var(--font-head);font-weight:700;
+  font-size:1.8rem;color:var(--yellow);
+  margin-bottom:10px;
+}
+.success-box p{color:var(--muted);line-height:1.7}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span>
+    </a>
+    <nav class="nav-links">
+      <a href="despre.html">Despre Noi</a>
+      <a href="pachete.html">Pachete &amp; Tarife</a>
+      <a href="evenimente.html">Evenimente</a>
+      <a href="rezervari.html" class="active">Rezervări</a>
+      <a href="contact.html">Contact</a>
+      <a href="recenzii.html">Review-uri</a>
+      <a href="locatie.html">Locație</a>
+    </nav>
+    <button class="theme-toggle">☀️</button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="despre.html">Despre Noi</a><a href="pachete.html">Pachete &amp; Tarife</a>
+  <a href="evenimente.html">Evenimente</a><a href="rezervari.html">Rezervări</a>
+  <a href="contact.html">Contact</a><a href="recenzii.html">Review-uri</a><a href="locatie.html">Locație</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <a href="index.html" class="back-link">Înapoi la Homepage</a>
+    <h1>Rezervă o Sesiune 📅</h1>
+    <p>Completează formularul și te contactăm în cel mai scurt timp pentru confirmare.</p>
+  </div>
+
+  <div class="rez-wrap">
+    <form class="rez-form reveal" id="rezForm" novalidate>
+      <div class="form-group">
+        <label>Nume și Prenume</label>
+        <input type="text" id="rez-name" placeholder="ex: Ionescu Maria"/>
+        <span class="form-error" id="err-name">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="rez-email" placeholder="email@exemplu.ro"/>
+        <span class="form-error" id="err-email">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Telefon</label>
+        <input type="tel" id="rez-phone" placeholder="07xx xxx xxx"/>
+        <span class="form-error" id="err-phone">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Data dorită</label>
+        <input type="date" id="rez-date"/>
+        <span class="form-error" id="err-date">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Ora dorită</label>
+        <select id="rez-time">
+          <option value="">Alege ora</option>
+          <option>10:00</option><option>12:00</option><option>14:00</option>
+          <option>16:00</option><option>18:00</option>
+        </select>
+        <span class="form-error" id="err-time">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Numărul de copii</label>
+        <input type="number" id="rez-kids" min="1" max="30" placeholder="ex: 2"/>
+        <span class="form-error" id="err-kids">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Vârsta copiilor</label>
+        <select id="rez-age">
+          <option value="">Alege grupa</option>
+          <option>1-3 ani</option>
+          <option>3-6 ani</option>
+          <option>6-12 ani</option>
+          <option>Mixt</option>
+        </select>
+        <span class="form-error" id="err-age">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Pachetul ales</label>
+        <select id="rez-pack">
+          <option value="">Alege pachetul</option>
+          <option>Mini</option>
+          <option>Maxi</option>
+          <option>Party</option>
+          <option>Altul</option>
+        </select>
+        <span class="form-error" id="err-pack">Câmp obligatoriu</span>
+      </div>
+      <div class="form-group">
+        <label>Mențiuni / cereri speciale</label>
+        <textarea id="rez-msg" placeholder="Detalii suplimentare..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-pink btn-full" style="margin-top:8px">Trimite Rezervarea 🎉</button>
+      <p class="rez-phone">Sau ne poți contacta direct: <a href="tel:+40764292754">📞 +40 764 292 754</a></p>
+    </form>
+
+    <div class="success-box reveal" id="rezSuccess">
+      <div class="s-icon">🎊</div>
+      <h3>Rezervare trimisă!</h3>
+      <p>Te vom contacta în cel mai scurt timp pentru confirmare. Ne vedem la Minitopia! 🌈</p>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link-center">‹ Înapoi la Homepage</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="nav-logo-icon">🎈</span><span class="nav-logo-text">Minitopia</span></a>
+      <p class="footer-tagline">Mini world maxi fun!!!</p>
+      <p>Locul unde imaginația prinde viață și fiecare colț e o nouă aventură.</p>
+      <div class="footer-social"><a href="#">📷</a><a href="#">📘</a><a href="#">🎵</a></div>
+    </div>
+    <div class="footer-col"><h4>Navigație</h4><ul>
+      <li><a href="index.html">Acasă</a></li><li><a href="despre.html">Despre Noi</a></li>
+      <li><a href="pachete.html">Pachete &amp; Tarife</a></li><li><a href="evenimente.html">Evenimente</a></li>
+      <li><a href="rezervari.html">Rezervări</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul>
+      <li><span class="fi">📍</span>Strada Veseliei Nr. 10, Sector 5, București</li>
+      <li><span class="fi">📞</span><a href="tel:+40764292754">+40 764 292 754</a></li>
+      <li><span class="fi">✉️</span><a href="mailto:rezervari@minitopia.ro">rezervari@minitopia.ro</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Program</h4><ul>
+      <li>🕐 Luni–Vineri<br/><strong style="color:var(--text)">10:00 – 20:00</strong></li>
+      <li>🕐 Sâmbătă–Duminică<br/><strong style="color:var(--text)">09:00 – 21:00</strong></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">© 2025 Minitopia · Toate drepturile rezervate · Creat cu ❤️ pentru cei mici</div>
+</footer>
+
+<button class="back-top" id="backTop">↑</button>
+<script src="script.js"></script>
+<script>
+  const d = document.getElementById('rez-date');
+  if (d) d.min = new Date().toISOString().split('T')[0];
+  const form = document.getElementById('rezForm');
+  const success = document.getElementById('rezSuccess');
+  const required = [
+    ['rez-name','err-name'],['rez-email','err-email'],['rez-phone','err-phone'],
+    ['rez-date','err-date'],['rez-time','err-time'],['rez-kids','err-kids'],
+    ['rez-age','err-age'],['rez-pack','err-pack']
+  ];
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let valid = true;
+    required.forEach(([id, errId]) => {
+      const el = document.getElementById(id), err = document.getElementById(errId);
+      if (!el.value.trim()) { err.classList.add('show'); valid = false; }
+      else err.classList.remove('show');
+    });
+    if (!valid) { shakeEl(form); return; }
+    const btn = form.querySelector('button[type=submit]');
+    btn.textContent = 'Se trimite... ⏳'; btn.disabled = true;
+    setTimeout(() => {
+      form.style.display = 'none';
+      success.style.display = 'block';
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1100);
+  });
+  required.forEach(([id, errId]) => {
+    document.getElementById(id).addEventListener('input', () => {
+      document.getElementById(errId).classList.remove('show');
+    });
+  });
+</script>
+</body>
+</html>
