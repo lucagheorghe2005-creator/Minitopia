@@ -3,7 +3,7 @@
    Culori extrase din site-ul original
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
   /* Dark mode (default) - din pozele tale */
@@ -30,7 +30,7 @@
   --radius-lg:   22px;
   --shadow:      0 4px 24px rgba(0,0,0,0.35);
   --shadow-lg:   0 16px 56px rgba(0,0,0,0.45);
-  --font-head:   'Fredoka', sans-serif;
+  --font-head:   'Baloo 2', sans-serif;
   --font-body:   'Nunito', sans-serif;
 }
 
@@ -77,6 +77,26 @@ body.light .moments h2{
   background-clip:text;
   -webkit-text-fill-color:transparent;
   color:transparent;
+}
+
+/* Emoji-urile din titluri NU trebuie sa primeasca gradient */
+body.light .page-hero h1 span.emoji,
+body.light h1 span.emoji,
+body.light h2 span.emoji,
+body .page-hero h1 span.emoji,
+body h1 span.emoji,
+body h2 span.emoji,
+.emoji{
+  background:none !important;
+  background-image:none !important;
+  background-color:transparent !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  -webkit-text-fill-color:initial !important;
+  color:initial !important;
+  display:inline-block;
+  margin-left:8px;
+  font-family:"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
 }
 
 /* === RESET === */
@@ -129,16 +149,27 @@ body.light .navbar{background:rgba(244,238,254,0.92)}
 }
 .nav-logo:hover{transform:translateY(-1px)}
 .nav-logo-icon{
-  width:36px;height:36px;
+  width:32px;height:32px;
   background:linear-gradient(135deg,var(--yellow),var(--orange));
   border-radius:50%;
+  flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;
+  position:relative;
+}
+.nav-logo-icon::after{
+  content:'';
+  width:14px;height:14px;
+  background:#fff;
+  border-radius:50%;
+  opacity:.85;
+  position:absolute;
+  top:5px;left:6px;
 }
 .nav-logo-text{
-  font-family:var(--font-head);font-weight:700;
+  font-family:var(--font-head);font-weight:800;
   font-size:1.15rem;color:var(--yellow);
 }
+body.light .nav-logo-text{color:var(--purple)}
 
 .nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
 .nav-links a{
@@ -159,13 +190,23 @@ body.light .nav-links a.active{
 }
 
 .theme-toggle{
-  background:none;border:none;
-  font-size:1.2rem;
-  color:var(--yellow);
-  padding:8px;border-radius:50%;
-  transition:background .2s;flex-shrink:0;
+  background:var(--bg-card-2);
+  border:1px solid var(--border-2);
+  color:var(--text);
+  width:42px;height:42px;border-radius:50%;
+  transition:background .2s,transform .2s;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-body);
+  font-size:0;
+  cursor:pointer;
 }
-.theme-toggle:hover{background:var(--border-2)}
+.theme-toggle:hover{background:var(--bg-card);transform:translateY(-1px)}
+.theme-toggle svg{width:18px;height:18px;fill:var(--text)}
+.theme-toggle .sun-icon{display:block}
+.theme-toggle .moon-icon{display:none}
+body.light .theme-toggle .sun-icon{display:none}
+body.light .theme-toggle .moon-icon{display:block}
 
 .hamburger{
   display:none;flex-direction:column;gap:5px;
@@ -227,7 +268,7 @@ body.light .nav-links a.active{
   padding:32px 24px 56px;
 }
 .page-hero h1{
-  font-family:var(--font-head);font-weight:700;
+  font-family:var(--font-head);font-weight:800;
   font-size:clamp(2.4rem,6vw,4rem);
   color:var(--yellow);
   margin-bottom:14px;
@@ -347,7 +388,16 @@ body.light .nav-links a.active{
   padding-bottom:40px;
   border-bottom:1px solid var(--border);
 }
-.footer-brand .nav-logo{margin-bottom:14px}
+.footer-brand .nav-logo{
+  margin-bottom:14px;
+  background:transparent;
+  border:none;
+  padding:0;
+}
+.footer-brand .nav-logo-icon{display:none}
+.footer-brand .nav-logo-text{
+  font-size:1.5rem;
+}
 .footer-tagline{
   font-family:var(--font-head);
   color:var(--pink);font-style:italic;
@@ -363,10 +413,27 @@ body.light .nav-links a.active{
   background:var(--bg-card-2);
   border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  font-size:.95rem;
   transition:background .2s,transform .2s;
+  color:var(--muted);
 }
-.footer-social a:hover{background:var(--pink);transform:scale(1.1)}
+.footer-social a:hover{
+  background:var(--pink);
+  transform:scale(1.1);
+  color:#fff;
+}
+.footer-social a svg{
+  width:18px;height:18px;
+  fill:currentColor;
+}
+body.light .footer-social a{
+  background:#fff;
+  color:var(--purple);
+  border-color:var(--border-2);
+}
+body.light .footer-social a:hover{
+  background:var(--pink);
+  color:#fff;
+}
 .footer-col h4{
   font-family:var(--font-head);font-weight:600;
   font-size:1rem;color:var(--white);
@@ -381,6 +448,24 @@ body.light .footer-col h4{color:var(--text)}
 }
 .footer-col ul li .fi{color:var(--pink);flex-shrink:0}
 .footer-col a:hover{color:var(--pink)}
+
+/* Program list - aliniere corecta */
+.footer-program li{
+  display:grid !important;
+  grid-template-columns:auto 1fr;
+  gap:10px;
+  align-items:start;
+}
+.footer-program .day{
+  display:flex;align-items:center;gap:6px;
+  color:var(--muted);
+}
+.footer-program .hours{
+  color:var(--text);font-weight:700;
+  white-space:nowrap;
+}
+
+/* Social icons SVG - color inherited from parent */
 .footer-bottom{
   max-width:1280px;margin:0 auto;
   padding:20px 0;text-align:center;
