@@ -133,6 +133,8 @@ button{font-family:var(--font-body);cursor:pointer}
 body.light .navbar{background:rgba(244,238,254,0.92)}
 
 .nav-inner{
+  display: flex;
+  justify-content: space-between;
   max-width:1320px;margin:0 auto;padding:0 32px;
   height:100%;display:flex;align-items:center;gap:32px;
 }
@@ -494,6 +496,12 @@ body.light .footer-col h4{color:var(--text)}
    ===================================================== */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
+/* butaone navbar */
+.buttons-navbar{
+  display: flex;
+  align-items: center;
+}
 
 /* Shake for form errors */
 @keyframes shake{
