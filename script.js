@@ -5,18 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- THEME TOGGLE ----
   const themeBtn = document.querySelector('.theme-toggle');
-  if (localStorage.getItem('minitopia-theme') === 'light') document.body.classList.add('light');
-  updateThemeIcon();
-  function updateThemeIcon() {
-    if (!themeBtn) return;
-    themeBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+
+  // Verificăm tema salvată la încărcarea paginii
+  if (localStorage.getItem('minitopia-theme') === 'light') {
+    document.body.classList.add('light');
   }
+
   if (themeBtn) {
     themeBtn.addEventListener('click', () => {
       document.body.classList.toggle('light');
       localStorage.setItem('minitopia-theme',
         document.body.classList.contains('light') ? 'light' : 'dark');
-      updateThemeIcon();
     });
   }
 
