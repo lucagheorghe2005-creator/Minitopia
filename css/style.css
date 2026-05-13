@@ -474,6 +474,15 @@ body.light .footer-col h4{color:var(--text)}
   font-size:.8rem;color:var(--muted);
 }
 
+.card-desc{
+  text-align: center;
+  color: white;
+}
+
+.desc{
+  text-align: center;
+}
+
 /* =====================================================
    BACK TO TOP
    ===================================================== */
