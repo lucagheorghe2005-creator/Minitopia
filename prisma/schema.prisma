@@ -7,13 +7,19 @@ datasource db {
   provider = "postgresql"
 }
 
+// name, email, phone, date, kids, age, pack, notes
 model Appointment {
   id     Int             @id @default(autoincrement())
   date   DateTime        @unique
   sent   DateTime        @default(now())
+  name   String
   email  String
-  status Status          @default(Pending)
+  phone  String
+  kids   Int
+  age    AgeGroup
   type   AppointmentType @default(Small)
+  notes  String?
+  status Status          @default(Pending)
 }
 
 model Review {
@@ -35,6 +41,13 @@ enum AppointmentType {
   Small
   Medium
   Large
+}
+
+enum AgeGroup {
+  OneToThree
+  ThreeToSix
+  SixToTwelve
+  Mixed
 }
 
 enum Status {

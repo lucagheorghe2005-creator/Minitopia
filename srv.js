@@ -8,7 +8,7 @@ import express from "express";
 import cors from "cors";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, AppointmentType, AgeGroup, Status } from "@prisma/client";
 import "dotenv/config";
 
 const app = express();
@@ -46,7 +46,7 @@ app.post("/api/rezervari", async (req, res) => {
 
   try {
     const appt = await prisma.appointment.create({
-      data: { name, email, phone, date: parsed, kids: Number(kids), age, pack, notes },
+      data: { name, email, phone, date: parsed, kids: Number(kids), age, type: pack, notes },
     });
     res.status(201).json(appt);
   } catch (err) {
