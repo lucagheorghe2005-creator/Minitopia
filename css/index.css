@@ -63,7 +63,7 @@ body.light .hero h1 .l1{color:var(--purple)}
   font-size:1rem;margin-bottom:48px;
 }
 
-.act-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .act-card{
   background:var(--bg-card);
   border:1px solid var(--border);
