@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Appointment {
+  id     Int             @id @default(autoincrement())
+  date   DateTime        @unique
+  sent   DateTime        @default(now())
+  email  String
+  status Status          @default(Pending)
+  type   AppointmentType @default(Small)
+}
+
+model Review {
+  id      Int      @id @default(autoincrement())
+  created DateTime @default(now())
+  name    String   @default("Ion Pop")
+  rating  Int      @default(5)
+  text    String?
+}
+
+model AdminAccount {
+  id       Int      @id @default(autoincrement())
+  created  DateTime @default(now())
+  name     String   @unique
+  password String
+}
+
+enum AppointmentType {
+  Small
+  Medium
+  Large
+}
+
+enum Status {
+  Pending
+  Accepted
+  Rejected
+}
